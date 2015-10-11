@@ -52,12 +52,13 @@ a,a:hover,a:focus {
     height:100%;
 }
 .form-signin {
-    max-width:330px;
+    max-width:500px;
     margin:100px auto;
     background:#fff;
     border-radius:5px;
     -webkit-border-radius:5px;
 }
+
 .form-signin h2.form-signin-heading {
     margin:0;
     padding:35px 15px;
@@ -84,7 +85,7 @@ a,a:hover,a:focus {
 }
 .form-signin .form-control {
     position:relative;
-    font-size:16px;
+    font-size:12px;
     height:auto;
     padding:10px;
     -webkit-box-sizing:border-box;
