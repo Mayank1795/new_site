@@ -166,16 +166,12 @@ if (isset($_POST['submit'])) {
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="css/bootstrap-switch.css" />
-    
-    
 
     <link rel="stylesheet" type="text/css" href="js/bootstrap-datepicker/css/datepicker.css" />
-    
-
 
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
-    <link href="css/style-responsive.css" rel="stylesheet"/>
+    <link href="css/style-responsive.css" rel="stylesheet" />
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]>
@@ -225,6 +221,9 @@ if (isset($_POST['submit'])) {
                                     </label>
                                     <label class="radio-inline">
                                       <input type="radio" name="inlineRadioOptions"  value="moneyorder"  <?php if(isset($_POST['inlineRadioOptions']) && $_POST['inlineRadioOptions']== 'moneyorder')  echo ' checked="checked"';?> > Money Order
+                                    </label>
+                                    <label class="radio-inline">
+                                      <input type="radio" name="inlineRadioOptions" id="watch-me" value="creditcard"  <?php if(isset($_POST['inlineRadioOptions']) && $_POST['inlineRadioOptions']== 'creditcard')  echo ' checked="checked"';?> > Credit card
                                     </label>
                                     <p class="help-block" style="color:#8A6D3B;"><?php if($radioErr) echo $radioErr ;?></p>
                                 </div>
@@ -311,8 +310,8 @@ if (isset($_POST['submit'])) {
                                     <p class="help-block"><?php if($accountNoErr) echo $accountNoErr ;?></p>
                                 </div>
                                 <label for="inputEx" class="col-lg-2 col-sm-2 control-label"><b>Expiration Date</b></label>
-                                <div class="col-lg-4 <?php if($ExpirationDErr) echo "has-warning";?>">
-                                    <input id="inputEx" name="Input_ExpirationD" value="<?php echo $ExpirationD; ?>" class="form-control">
+                                <div class="col-md-4 <?php if($ExpirationDErr) echo "has-warning";?>" >
+                                    <input class="form-control form-control-inline input-medium default-date-picker"  value="" size="16" type="text" id="inputEx" name="Input_ExpirationD">
                                     <p class="help-block"><?php if($ExpirationDErr) echo $ExpirationDErr ;?></p>
                                 </div>                                
                             </div>
@@ -337,16 +336,22 @@ if (isset($_POST['submit'])) {
                                     <p class="help-block"><?php if($businessAddErr) echo $businessAddErr ;?></p>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" id="hide-me">
                             <div class="col-lg-10 col-lg-offset-1"> 
                             <p>I understand that State law requires that a contribution be in my name and be from my own funds. I hereby affirm that this contribution is being made from my personal funds, is not being reimbursed in any manner, and is not being made as a loan.
                             </p></div></div>
+
+                            <div class="form-group" style='display:none' id="show-me">
+                            <div class="col-lg-10 col-lg-offset-1" > 
+                            <p>I understand that State law requires that a contribution be in my name and ve from my own funds. I hereby affirm this contribution made from my personal funds, is not being reimbursed in any manner and is not being as a loan, in addiion, in the case of a credit card contribution, I also hereby affirm tha this contribution is being made from my personal credit card account, billed to and paid by me for my personal use, and has no corporate or business affiliation.
+                            </p></div></div>
+
                         <div class="form-group">
                                 <label class="col-lg-2 col-sm-2 control-label"><b>Date of Contribution</b></label>
-                                <div class="col-md-4 col-xs-11  <?php if($dateErr) echo "has-warning";?>">
-                                    <input name="Input_date" value="<?php echo $date; ?>"  class="form-control form-control-inline input-medium default-date-picker"  size="16" type="text" value="" />
+                                <div class="col-md-3 col-xs-11  <?php if($dateErr) echo "has-warning";?>">
+                                     <input class="form-control form-control-inline input-medium default-date-picker"  size="16" type="text" value="" name="Input_date" />
                                     <p class="help-block"><?php if($dateErr) echo $dateErr ;?></p>
-                                    <span class="help-block">Select date</span>
+                    
                                 </div>
                             </div>
 
@@ -413,21 +418,49 @@ if (isset($_POST['submit'])) {
 
 </section>
 <!-- Placed js at the end of the document so the pages load faster -->
+
 <!--Core js-->
-<script src="js/jquery.js"></script>
-<!--Core js-->
+
 <script src="js/jquery.js"></script>
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="bs3/js/bootstrap.min.js"></script>
 <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
 
 <script src="js/jquery.scrollTo.min.js"></script>
-
 <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
 <script src="js/jquery.nicescroll.js"></script>
-<script src="js/jquery.nicescroll.js"></script>
+
+
+<script src="js/bootstrap-switch.js"></script>
+
 
 <script type="text/javascript" src="js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-<!--script for this page-->
+
+
+
+<script src="js/select2/select2.js"></script>
+
+
+<!--common script init for all pages-->
+<script src="js/scripts.js"></script>
+
+<script src="js/advanced-form.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+    $('input[type="radio"]').click(function() {
+       if($(this).attr('id') == 'watch-me') {
+            $('#show-me').show();  
+            $('#hide-me').hide();
+       }
+
+       else {
+            $('#show-me').hide();
+            $('#hide-me').show();   
+       }
+   });
+});
+
+</script>
+
 </body>
 </html>

@@ -5,7 +5,7 @@ session_start();
 //database credentials
 define('DBHOST','localhost');
 define('DBUSER','root');
-define('DBPASS','');
+define('DBPASS','sinku1795');
 define('DBNAME','website');
 
 //application address
