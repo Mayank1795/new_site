@@ -2,14 +2,14 @@
 require('functions.php');
 
 // Define variables and initialize with empty values
-$amount = $name= $homeAddress= $city = "";
+$amount = $name= $homeAddress= $zip = "";
 $telephone = $email = $Employer = $Occupation ="";
 $businessAdd =$date = $Agency = $businessType = "";
 $businessName = $position = "";
 $accountHolder =  $cardType = $accountNo =$ExpirationD = "";
 
 $radioErr=  $radiobuttonValue= ""; 
-$amountErr = $nameErr= $homeAddressErr= $cityErr = "";
+$amountErr = $nameErr= $homeAddressErr= $zipErr = "";
 $telephoneErr = $emailErr = $EmployerErr = $OccupationErr ="";
 $businessAddErr =$dateErr = $AgencyErr = $businessTypeErr = "";
 $businessNameErr = $positionErr = "";
@@ -20,14 +20,14 @@ if (isset($_POST['submit'])) {
         $amount = $_POST["Input_amount"]; 
         $name= $_POST["Input_name"];
         $homeAddress= mysql_real_escape_string($_POST["Input_homeAddress"]);
-        $city = mysql_real_escape_string($_POST["Input_city"]);
+        $zip = mysql_real_escape_string($_POST["Input_zip"]);
         $telephone = mysql_real_escape_string($_POST["Input_telephone"]);
         $email = mysql_real_escape_string($_POST["Input_email"]);
         $Employer = $_POST["Input_Employer"];
         $Occupation =$_POST["Input_Occupation"];
         $businessAdd = mysql_real_escape_string($_POST["Input_businessAdd"]);
         $date = $_POST["Input_date"];
-        $cityAgency = $_POST["Input_Agency"];
+        $zipAgency = $_POST["Input_Agency"];
         $businessType = $_POST["Input_businessType"];
         $businessName =  $_POST["Input_businessName"];
         $position = $_POST["Input_position"];
@@ -75,13 +75,13 @@ if (isset($_POST['submit'])) {
         }
     }
 
-    //Validate city/zip
-    if (!$city) {
-        $cityErr = 'Please enter your city or zip code.';
+    //Validate zip/zip
+    if (!$zip) {
+        $zipErr = 'Please enter your zip code.';
     } else{
-        $cityErr = filterString($cityErr);
-        if ($city == FALSE) {
-            $cityErr = 'Please enter a valid zip code or city name.';
+        $zipErr = filterString($zipErr);
+        if ($zip == FALSE) {
+            $zipErr = 'Please enter a valid zip code.';
         }
 
     }
@@ -225,7 +225,7 @@ if (isset($_POST['submit'])) {
                                     <label class="radio-inline">
                                       <input type="radio" name="inlineRadioOptions" id="watch-me" value="creditcard"  <?php if(isset($_POST['inlineRadioOptions']) && $_POST['inlineRadioOptions']== 'creditcard')  echo ' checked="checked"';?> > Credit card
                                     </label>
-                                    <p class="help-block" style="color:#8A6D3B;"><?php if($radioErr) echo $radioErr ;?></p>
+                                     <p class="help-block" style="color:#8A6D3B;"><?php if($radioErr) echo $radioErr ;?></p>
                                 </div>
 
                                   </div>
@@ -247,7 +247,7 @@ if (isset($_POST['submit'])) {
                                                                    
                              <div class="form-group">
                                     <label for="inputName" class="col-lg-2 col-sm-2 control-label"><b>Contributor Name</b></label>
-                                    <div class="col-lg-6 <?php if($nameErr) echo "has-warning";?>">
+                                    <div class="col-lg-4 <?php if($nameErr) echo "has-warning";?>">
                                         <input type="text"name="Input_name" value="<?php echo $name; ?>"  class="form-control" id="inputName">
                                         <p class="help-block"><?php if($nameErr) echo $nameErr ;?></p>
                                     </div>
@@ -255,42 +255,48 @@ if (isset($_POST['submit'])) {
                           
                             <div class="form-group">
                                 <label for="inputAddress" class="col-lg-2 col-sm-2 control-label"><b>Home Address</b></label>
-                                <div class="col-lg-6 <?php if($homeAddressErr) echo "has-warning";?> ">
-                                    <textarea class="form-control" name="Input_homeAddress" value="<?php echo $homeAddress; ?>" id="inputAddress" rows="3"></textarea>
+                                <div class="col-lg-4 <?php if($homeAddressErr) echo "has-warning";?> ">
+                                    <textarea class="form-control" name="Input_homeAddress" value="<?php echo $homeAddress; ?>" id="inputAddress" rows="4"></textarea>
                                     <p class="help-block"><?php if($homeAddressErr) echo $homeAddressErr ;?></p>
                                 </div>
                             </div>
                            
                             <div class="form-group"> 
                                 <label for="inputZip" class="col-lg-2 col-sm-2 control-label">
-                                    <b>City/State/Zip</b>
+                                    <b>Zip Code</b>
                                 </label>
-                                <div class="col-lg-3 <?php if($cityErr) echo "has-warning";?>">
-                                    <input id="inputZip" name="Input_city" value="<?php echo $city; ?>" class="form-control">
-                                     <p class="help-block"><?php if($cityErr) echo $cityErr ;?></p>
+                                <div class="col-lg-2 <?php if($zipErr) echo "has-warning";?>">
+                                    <input id="inputZip" name="Input_zip" value="<?php echo $zip; ?>" class="form-control">
+                                     <p class="help-block"><?php if($zipErr) echo $zipErr ;?></p>
+                                </div>   
+                                <label for="inputCity" class="col-lg-1 col-sm-1 control-label">
+                                    <b>City</b>
+                                </label>
+                                <div class="col-lg-2">
+                                    <input id="inputCity" name="Input_city" value="" class="form-control">
+                                </div>
+
+                                <label for="inputState" class="col-lg-1 col-sm-1 control-label">
+                                    <b>State</b>
+                                </label>
+                                <div class="col-lg-2">
+                                    <input id="inputState" name="Input_state" value="" class="form-control">
                                 </div>                                
                             </div>
                             
                             <div class="form-group">
                                 <label for="inputTel" class="col-lg-2 col-sm-2 control-label"><b>Telephone</b></label> 
-                                <div class="col-lg-3  <?php if($telephoneErr) echo "has-warning";?>">
+                                <div class="col-lg-3">
                                     <input id="inputTel" name="Input_telephone" value="<?php echo $telephone; ?>" class="form-control">
-                                    <p class="help-block"><?php if($telephoneErr) echo $telephoneErr ;?></p>
                                 </div>
                                 <label for="inputEmail" class="col-lg-2 col-sm-2 control-label"><b>Email</b></label>
-                                <div class="col-lg-4 <?php if($emailErr) echo "has-warning";?>">
+                                <div class="col-lg-4">
                                     <input id="inputEmail" name="Input_email" value="<?php echo $email; ?>"  class="form-control">
-                                    <p class="help-block"><?php if($emailErr) echo $emailErr ;?></p>
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                            <div class="col-lg-10 col-lg-offset-1">
-                            <p>To comply with New York City Campaign Finance Board reporting requirements, provide your employment information. If you are not employed, indicate what best describes your employment status (e.g., “homemaker”, “retired”, “student,” or “unemployed”). If self-employed, indicate employer as “self” and provide your occupation and employment address.</p>
-                            </div>
-                            </div>
-
-                            <div class="form-group">
+                            
+                            <div class="form-group" id="one" style='display:none'>
                                 <label for="inputAH" class="col-lg-2 col-sm-2 control-label"><b>Account Holder</b></label> 
                                 <div class="col-lg-3 <?php if($accountHolderErr) echo "has-warning";?>">
                                     <input id="inputAH" name="Input_accountHolder" value="<?php echo $accountHolder; ?>"  class="form-control">
@@ -303,7 +309,7 @@ if (isset($_POST['submit'])) {
                                 </div>                                
                             </div>
 
-                             <div class="form-group">
+                             <div class="form-group" id="two" style='display:none'>
                                 <label for="inputAN" class="col-lg-2 col-sm-2 control-label"><b>Account No.</b></label> 
                                 <div class="col-lg-3 <?php if($accountNoErr) echo "has-warning";?>">
                                     <input id="inputAN" name="Input_accountNo" value="<?php echo $accountNo; ?>" class="form-control">
@@ -317,23 +323,27 @@ if (isset($_POST['submit'])) {
                             </div>
 
                             <div class="form-group">
+                            <div class="col-lg-10 col-lg-offset-1">
+                            <p>To comply with New York zip Campaign Finance Board reporting requirements, provide your employment information. If you are not employed, indicate what best describes your employment status (e.g., “homemaker”, “retired”, “student,” or “unemployed”). If self-employed, indicate employer as “self” and provide your occupation and employment address.</p>
+                            </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="inputEmployer" class="col-lg-2 col-sm-2 control-label"><b>Employer</b></label> 
                                 <div class="col-lg-3 <?php if($EmployerErr) echo "has-warning";?>">
                                     <input id="inputEmployer" name="Input_Employer" value="<?php echo $Employer; ?>"  class="form-control">
                                     <p class="help-block"><?php if($EmployerErr) echo $EmployerErr ;?></p>
                                 </div>
                                 <label for="inputEx" class="col-lg-2 col-sm-2 control-label"><b>Occupation</b></label>
-                                <div class="col-lg-4 <?php if($OccupationErr) echo "has-warning";?>">
+                                <div class="col-lg-4">
                                     <input id="inputEx" name="Input_Occupation" value="<?php echo $Occupation; ?>" class="form-control">
-                                    <p class="help-block"><?php if($OccupationErr) echo $OccupationErr ;?></p>
                                 </div>  
                             </div>
 
                             <div class="form-group">
                                 <label for="inputBAddress" class="col-lg-2 col-sm-2 control-label"><b>Business Address</b></label>
-                                <div class="col-lg-6  <?php if($businessAddErr) echo "has-warning";?>">
-                                    <textarea class="form-control" name="Input_businessAdd" value="<?php echo $businessAdd; ?>"  id="inputBAddress" rows="3"></textarea>
-                                    <p class="help-block"><?php if($businessAddErr) echo $businessAddErr ;?></p>
+                                <div class="col-lg-4">
+                                    <textarea class="form-control" name="Input_businessAdd" value="<?php echo $businessAdd; ?>"  id="inputBAddress" rows="4"></textarea>
                                 </div>
                             </div>
                             <div class="form-group" id="hide-me">
@@ -348,22 +358,20 @@ if (isset($_POST['submit'])) {
 
                         <div class="form-group">
                                 <label class="col-lg-2 col-sm-2 control-label"><b>Date of Contribution</b></label>
-                                <div class="col-md-3 col-xs-11  <?php if($dateErr) echo "has-warning";?>">
-                                     <input class="form-control form-control-inline input-medium default-date-picker"  size="16" type="text" value="" name="Input_date" />
-                                    <p class="help-block"><?php if($dateErr) echo $dateErr ;?></p>
-                    
+                                <div class="col-md-3 col-xs-11">
+                                     <input class="form-control form-control-inline input-medium default-date-picker"  size="16" type="text" value="<?php echo date('m/d/Y')?>" name="Input_date" />
                                 </div>
                             </div>
 
                             <div class="form-group">
                             <div class="col-lg-10 col-lg-offset-1"> 
-                            <p>If a contributor has business dealings with the City as defined in the Campaign Finance Act, such contributor may contribute only up to $250 for city council, $320 for borough president and $400 for mayor, comptroller or public advocate.
-                            </p><p>If you are “doing business” with the City, please complete the following:</p>
+                            <p>If a contributor has business dealings with the zip as defined in the Campaign Finance Act, such contributor may contribute only up to $250 for zip council, $320 for borough president and $400 for mayor, comptroller or public advocate.
+                            </p><p>If you are “doing business” with the zip, please complete the following:</p>
                             </div></div>
 
                         <div class="form-group">
                             
-                            <label for="inputAgency" class="col-lg-3 col-sm-3 control-label"><b>With Which City Agency</b></label>
+                            <label for="inputAgency" class="col-lg-3 col-sm-3 control-label"><b>With Which zip Agency</b></label>
                             <div class="col-lg-4  <?php if($AgencyErr) echo "has-warning";?>">
                                 <input type="text" name="Input_Agency" value="<?php echo $Agency; ?>"  class="form-control" id="inputAgency">                
                                 <p class="help-block"><?php if($AgencyErr) echo $AgencyErr ;?></p>
@@ -426,6 +434,8 @@ if (isset($_POST['submit'])) {
 <script src="bs3/js/bootstrap.min.js"></script>
 <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
 
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+
 <script src="js/jquery.scrollTo.min.js"></script>
 <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
 <script src="js/jquery.nicescroll.js"></script>
@@ -449,12 +459,16 @@ if (isset($_POST['submit'])) {
     $(document).ready(function() {
     $('input[type="radio"]').click(function() {
        if($(this).attr('id') == 'watch-me') {
-            $('#show-me').show();  
+            $('#show-me').show();
+            $('#one').show();
+            $('#two').show();
             $('#hide-me').hide();
        }
 
        else {
             $('#show-me').hide();
+            $('#one').hide();
+            $('#two').hide();
             $('#hide-me').show();   
        }
    });
