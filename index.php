@@ -266,21 +266,21 @@ if (isset($_POST['submit'])) {
                                     <b>Zip Code</b>
                                 </label>
                                 <div class="col-lg-2 <?php if($zipErr) echo "has-warning";?>">
-                                    <input id="inputZip" name="Input_zip" value="<?php echo $zip; ?>" class="form-control">
+                                    <input id="inputZip" class="form-control postcode" name="Input_zip" value="<?php echo $zip; ?>">
                                      <p class="help-block"><?php if($zipErr) echo $zipErr ;?></p>
                                 </div>   
                                 <label for="inputCity" class="col-lg-1 col-sm-1 control-label">
                                     <b>City</b>
                                 </label>
                                 <div class="col-lg-2">
-                                    <input id="inputCity" name="Input_city" value="" class="form-control">
+                                    <input id="inputCity" class="city form-control" name="Input_city" value="" class="form-control">
                                 </div>
 
                                 <label for="inputState" class="col-lg-1 col-sm-1 control-label">
                                     <b>State</b>
                                 </label>
                                 <div class="col-lg-2">
-                                    <input id="inputState" name="Input_state" value="" class="form-control">
+                                    <input id="inputState" class="state form-control" name="Input_state" value="" class="form-control">
                                 </div>                                
                             </div>
                             
@@ -317,7 +317,8 @@ if (isset($_POST['submit'])) {
                                 </div>
                                 <label for="inputEx" class="col-lg-2 col-sm-2 control-label"><b>Expiration Date</b></label>
                                 <div class="col-md-4 <?php if($ExpirationDErr) echo "has-warning";?>" >
-                                    <input class="form-control form-control-inline input-medium default-date-picker"  value="" size="16" type="text" id="inputEx" name="Input_ExpirationD">
+                                    <input placeholder="" data-mask="99/9999" class="form-control"  value="" id="inputEx" name="Input_ExpirationD">
+                                    <span class="help-inline">month/year</span>
                                     <p class="help-block"><?php if($ExpirationDErr) echo $ExpirationDErr ;?></p>
                                 </div>                                
                             </div>
@@ -443,6 +444,7 @@ if (isset($_POST['submit'])) {
 
 <script src="js/bootstrap-switch.js"></script>
 
+<script type="text/javascript" src="js/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
 
 <script type="text/javascript" src="js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 
@@ -474,6 +476,31 @@ if (isset($_POST['submit'])) {
    });
 });
 
+</script>
+<script type="text/javascript">
+        jQuery(document).ready(function(){
+        jQuery('.postcode').blur(function(){ //.postcode class of zipcode text field
+        var s = jQuery(this).val();
+        console.log(s);
+        jQuery.ajax({
+        type: 'POST',
+        url:'postcode.php',
+        dataType: 'json', //is used for return multiple values
+        data: { 's' : s },
+        success: function(data){
+        try {
+        jQuery('.state').val(data.state); //region-class of state text field
+        jQuery('.city').val(data.dist);//city-class of city text filed
+        } catch (e) {
+        alert(e.Message);
+        }
+        },
+        error:function (xhr, status, err){
+        alert( 'status=' + xhr.responseText + ', error=' + err );
+        }
+        });
+        });
+        });
 </script>
 
 </body>
