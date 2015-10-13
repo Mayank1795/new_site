@@ -1,5 +1,16 @@
 <?php
 
+function get_contributor_name(){
+    global $db;
+    $query = $db->query("SELECT name_candidate FROM campaigns ORDER BY name_candidate");
+    $query = $query->fetchAll(PDO::FETCH_ASSOC);
+    if (!$query) {
+            return $db->errorInfo();;
+        } else {
+            return $query;
+        }
+}
+
 // Functions to filter user inputs
 function filterName($field){
     // Sanitize user name

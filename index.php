@@ -1,18 +1,19 @@
 <?php 
+require('config.php');
 require('functions.php');
 
 // Define variables and initialize with empty values
 $amount = $name= $homeAddress= $zip = "";
 $telephone = $email = $Employer = $Occupation ="";
 $businessAdd =$date = $Agency = $businessType = "";
-$businessName = $position = "";
+$businessName = $position = $committe="" ;
 $accountHolder =  $cardType = $accountNo =$ExpirationD = "";
 
 $radioErr=  $radiobuttonValue= ""; 
 $amountErr = $nameErr= $homeAddressErr= $zipErr = "";
 $telephoneErr = $emailErr = $EmployerErr = $OccupationErr ="";
 $businessAddErr =$dateErr = $AgencyErr = $businessTypeErr = "";
-$businessNameErr = $positionErr = "";
+$businessNameErr = $positionErr = $committeErr ="";
 $accountHolderErr =  $cardTypeErr = $accountNoErr =$ExpirationDErr = "";
 
 
@@ -35,6 +36,7 @@ if (isset($_POST['submit'])) {
         $cardTypeErr = mysql_real_escape_string($_POST["Input_cardType"]);
         $accountNo = mysql_real_escape_string($_POST["Input_accountNo"]);
         $ExpirationD = $_POST["Input_ExpirationD"];
+        $committe = $_POST["Input_committe"];
        
 
     // Validate Contributor name
@@ -166,6 +168,7 @@ if (isset($_POST['submit'])) {
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="css/bootstrap-switch.css" />
+    <link rel="stylesheet" href="css/typeahead.css" />
 
     <link rel="stylesheet" type="text/css" href="js/bootstrap-datepicker/css/datepicker.css" />
 
@@ -209,7 +212,16 @@ if (isset($_POST['submit'])) {
                     <div class="panel-body">
                         <div>
                             <form class="form-horizontal" role="form" action="" method="post">
-                              
+
+                                <div class="form-group">
+                                    <label for="Input_committe"  class="col-lg-2 col-sm-2 control-label"><b>Enter Committe Name</b></label>
+                                    <div class="col-lg-4 <?php if($committeErr) echo "has-warning";?>" id="inputCommitte">
+                                    <input type="text" class="typeahead" name="Input_committe" value="<?php echo $committe; ?>"  class="form-control">                                    
+                                    
+                                     <p class="help-block"><?php if($committeErr) echo $committeErr ;?></p>
+                                     </div>
+                                </div>
+
                                 <div class="form-group">
                                 <div class="col-lg-12">
                                     <label class="col-lg-2 col-sm-2 control-label"><b>Contribution Type</b></label>
@@ -443,7 +455,7 @@ if (isset($_POST['submit'])) {
 
 
 <script src="js/bootstrap-switch.js"></script>
-
+<script  type="text/javascript" src="js/typeahead.min.js"></script>
 <script type="text/javascript" src="js/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
 
 <script type="text/javascript" src="js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
@@ -501,6 +513,51 @@ if (isset($_POST['submit'])) {
         });
         });
         });
+</script>
+
+<script type="text/javascript">
+    var substringMatcher = function(strs) {
+  return function findMatches(q, cb) {
+    var matches, substringRegex;
+
+    // an array that will be populated with substring matches
+    matches = [];
+
+    // regex used to determine if a string contains the substring `q`
+    substrRegex = new RegExp(q, 'i');
+
+    // iterate through the pool of strings and for any string that
+    // contains the substring `q`, add it to the `matches` array
+    $.each(strs, function(i, str) {
+      if (substrRegex.test(str)) {
+        matches.push(str);
+      }
+    });
+
+    cb(matches);
+  };
+};
+
+<?php $result = get_contributor_name(); ?>
+                                                                                    
+                                            
+var states = [<?php foreach ($result as $res){ 
+                echo " '$res[name_candidate]',";
+            }
+            ?>
+];
+
+$('#inputCommitte .typeahead').typeahead({
+  hint: true,
+  highlight: true,
+  minLength: 1
+},
+{
+  name: 'states',
+  source: substringMatcher(states)
+});
+
+
 </script>
 
 </body>
