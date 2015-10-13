@@ -5,16 +5,17 @@ require('functions.php');
 // Define variables and initialize with empty values
 $amount = $name= $homeAddress= $zip = "";
 $telephone = $email = $Employer = $Occupation ="";
-$businessAdd =$date = $Agency = $businessType = "";
+$businessAdd =$date_contribution = $Agency = $businessType = "";
 $businessName = $position = $committe="" ;
 $accountHolder =  $cardType = $accountNo =$ExpirationD = "";
 
-$radioErr=  $radiobuttonValue= ""; 
+$radioErr= ""; 
 $amountErr = $nameErr= $homeAddressErr= $zipErr = "";
 $telephoneErr = $emailErr = $EmployerErr = $OccupationErr ="";
 $businessAddErr =$dateErr = $AgencyErr = $businessTypeErr = "";
 $businessNameErr = $positionErr = $committeErr ="";
 $accountHolderErr =  $cardTypeErr = $accountNoErr =$ExpirationDErr = "";
+$amountErr1 = $amountErr2="";
 
 
 if (isset($_POST['submit'])) {
@@ -27,7 +28,7 @@ if (isset($_POST['submit'])) {
         $Employer = $_POST["Input_Employer"];
         $Occupation =$_POST["Input_Occupation"];
         $businessAdd = mysql_real_escape_string($_POST["Input_businessAdd"]);
-        $date = $_POST["Input_date"];
+        $date_contribution = $_POST["Input_date"];
         $zipAgency = $_POST["Input_Agency"];
         $businessType = $_POST["Input_businessType"];
         $businessName =  $_POST["Input_businessName"];
@@ -38,114 +39,106 @@ if (isset($_POST['submit'])) {
         $ExpirationD = $_POST["Input_ExpirationD"];
         $committe = $_POST["Input_committe"];
        
-
-    // Validate Contributor name
-    if(!$name){
-        $nameErr = 'Please enter your name.';
-    }else{
-        $name = filterName($name);
-        if($name == FALSE){
-            $nameErr = 'Please enter a valid name.';
+       if (isset($_POST['inlineRadioOptions'])) {
+        if ($_POST['inlineRadioOptions'] == 'cash') {
+        if ($amount > 100) {
+            $amountErr1 = 'Total cash contribution is greater than $100.  This may be an invalid contribution';
+        } 
+        if ($amount > 150) {
+            $amountErr2 = 'Total contribution exceeds the contribution limit of ‘[Office Limit]’.  This may be an invalid contribution';
         }
+        
     }
-
+       }
     
-    // Validate Contrubution type address
-    if(!isset($_POST["inlineRadioOptions"])){
-        $radioErr = 'Please select the contribution type.';     
-    }else{
-      $radiobuttonValue = $_POST["inlineRadioOptions"];        
-    }
-
-    // Validate amount
-    if(!$amount){
-        $amountErr = 'Please enter the amount.';     
-    }else{
-        $amount = filterNumeric($amount);
-        if($amount == FALSE){
-            $amountErr = 'Please enter a valid email address.';
-        }
-    }
-
-    //Validate Home Address
-    if (!$homeAddress) {
-        $homeAddressErr = 'Please enter your home address.';
-    } else{
-        $homeAddress = filterString($homeAddress);
-        if ($homeAddress == FALSE) {
-            $homeAddressErr = 'Enter a valid address';
-        }
-    }
-
-    //Validate zip/zip
-    if (!$zip) {
-        $zipErr = 'Please enter your zip code.';
-    } else{
-        $zipErr = filterString($zipErr);
-        if ($zip == FALSE) {
-            $zipErr = 'Please enter a valid zip code.';
-        }
-
-    }
-
-    //Validate telephone
-    if (!$telephone) {
-        $telephoneErr = 'Please enter your telephone number.';
-    } else {
-        $telephone = filterNumeric($telephone);
-        if ($telephone == FALSE) {
-            $telephoneErr = 'Please enter a valid telephone no.';
-        }
-    }
-
-     // Validate email address
-    if(!$email){
-        $emailErr = 'Please enter your email address.';     
-    }else{
-        $email = filterEmail($email);
-        if($email == FALSE){
-            $emailErr = 'Please enter a valid email address.';
-        }
-    }
-
-    //Valdiate Employee
-
-    if (!$Employer) {
-        $EmployerErr = 'Please enter your employment status';
-    } else {
-        $Employer = filterString($Employer);
-        if ($Employer == FALSE) {
-            $EmployerErr = 'Please enter a valid employment status';
-        }
-    }
-
-    //Vadlidate Occupation
-
-    if (!$Occupation) {
-        $OccupationErr = 'Please enter your occupation.';
-    } else {
-        $Occupation = filterString($Occupation);
-        if ($Occupation == FALSE) {
-            $OccupationErr = 'Please enter a valid occupation.';
-        }
-    }
-
-    //Valdiate business address
-
-    if (!$businessAdd) {
-        $businessAddErr = 'Please enter your business address.';
-    } else{
-        $businessAdd = filterString($businessAdd);
-        if ($businessAdd == FALSE) {
-            $businessAddErr = 'Please enter a valid address';
-        }
-    }
-
-    //Validate doing business is to be written.
+    if (empty($name)) {
+       $nameErr = 'Please enter your name.';
+    } 
     
+    if (empty($committe)) {
+        $committeErr = 'Please Enter Committe Name.';
+    }
 
+    if (!isset($_POST["inlineRadioOptions"])) {
+        $radioErr = 'Please select the contribution type.'; 
+    }
+    
+    if (empty($amount)) {
+       $amountErr = 'Please enter the amount.'; 
+    }
+       
+    if (empty($homeAddress)) {
+      $homeAddressErr = 'Please enter your home address.';
+    } 
+
+    if (empty($zip)) {
+       $zipErr = 'Please enter your zip code.';
+    }  
+  
+    if (empty($email)) {
+        $emailErr = 'Please enter your email address.';  
+    } 
+    
+    if (empty($Employer)) {
+     $EmployerErr = 'Please enter your employment status';
+    } 
+
+    if (empty($accountNo) ){
+        $accountNoErr = 'Please enter your account number';
+    }
+
+    if (empty($accountHolder)) {
+        $accountHolderErr = 'Please enter your account holder name';
+    }
+    
+    if (empty($cardType)) {
+        $cardTypeErr = 'Please enter your card type';
+    }
+
+    if (empty($ExpirationD)) {
+        $ExpirationDErr = "Please enter your card's expiration date";
+    }
 }   
 
+    
+    $campaignId = get_campaign_id($committe);
+
+    $date_contribution = date('Y-m-d', strtotime($date_contribution));
+
+    if (isset($_POST["inlineRadioOptions"])=='credit') {
+    if (!empty($ExpirationD) && !empty($cardType) && !empty($accountHolder)
+        && !empty($accountNo) && !empty($Employer) && !empty($email)
+        && !empty($zip) && !empty($homeAddress) && !empty($amount)
+        && !empty($committe) && !empty($name)) {
+
+          $query = $db->query("INSERT INTO donor (campaignID, contribution_type, amount, 
+          donor_name, address, zip, city, state, telephone, email, employer_type,
+          occupation, business_address, date_contribution, city_agency, business_type,
+          business_entity, position, ac_holder, card_type, ac_number, expiration_date) VALUES 
+         ('$campaignId', '$contribution_type', '$amount', '$name', '$homeAddress', '$zip', '$city', '$state',
+         '$telephone', '$email', '$Employer', '$Occupation', '$businessAdd', '$date_contribution',
+         '$Agency', '$businessType', '$businessName', '$position', '$accountHolder', '$cardType', '$accountNo', 
+         '$ExpirationD')");
+
+    }
+    } else {
+        if ($Employer!="" and $email!=""
+    and $zip!="" and $homeAddress!="" and $amount!=""
+        and $committe!="" and $name!="") {
+
+          $query = $db->query("INSERT INTO donor (campaignID, contribution_type, amount, 
+          donor_name, address, zip, city, state, telephone, email, employer_type,
+          occupation, business_address, date_contribution, city_agency, business_type,
+          business_entity, position, ac_holder, card_type, ac_number, expiration_date) VALUES 
+         ('$campaignId', '$contribution_type', '$amount', '$name', '$homeAddress', '$zip', '$city', '$state',
+         '$telephone', '$email', '$Employer', '$Occupation', '$businessAdd', '$date_contribution',
+         '$Agency', '$businessType', '$businessName', '$position', '$accountHolder', '$cardType', '$accountNo', 
+         '$ExpirationD')");
+
+    }
+
+   
+}
 
 ?>
 
@@ -216,7 +209,7 @@ if (isset($_POST['submit'])) {
                                 <div class="form-group">
                                     <label for="Input_committe"  class="col-lg-2 col-sm-2 control-label"><b>Enter Committe Name</b></label>
                                     <div class="col-lg-4 <?php if($committeErr) echo "has-warning";?>" id="inputCommitte">
-                                    <input type="text" class="typeahead" name="Input_committe" value="<?php echo $committe; ?>"  class="form-control">                                    
+                                    <input type="text" class="typeahead" placeholder="Enter a Committe Name" name="Input_committe" value="<?php echo $committe; ?>"  class="form-control">                                    
                                     
                                      <p class="help-block"><?php if($committeErr) echo $committeErr ;?></p>
                                      </div>
@@ -254,6 +247,8 @@ if (isset($_POST['submit'])) {
 
                                      </div> 
                                      <p class="help-block" style="color:#8A6D3B;"><?php if($amountErr) echo $amountErr ;?></p>
+                                     <p class="help-block" style="color:#8A6D3B;"><?php if($amountErr1) echo $amountErr1 ;?></p>
+                                     <p class="help-block" style="color:#8A6D3B;"><?php if($amountErr2) echo $amountErr2 ;?></p>
                                      </div>
                               </div>
                                                                    
@@ -484,6 +479,20 @@ if (isset($_POST['submit'])) {
             $('#one').hide();
             $('#two').hide();
             $('#hide-me').show();   
+       }
+   });
+});
+
+ $(document).ready(function() {
+    $('input[type="radio"]').click(function() {
+       if($(this).attr('id') == 'watch-me') {
+            $('#one').show();
+            $('#two').show();
+       }
+
+       else {
+            $('#one').hide();
+            $('#two').hide();
        }
    });
 });

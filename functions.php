@@ -1,4 +1,15 @@
 <?php
+function get_campaign_id($name){
+    global $db;
+    $query = $db->query("SELECT campaignID FROM campaigns WHERE name_candidate = '$name'");
+    $query = $query->fetchAll(PDO::FETCH_ASSOC);
+    if (!$query) {
+            return $db->errorInfo();;
+        } else {
+            return $query[0]['campaignID'];
+        }
+
+}
 
 function get_contributor_name(){
     global $db;
