@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 13, 2015 at 07:47 PM
+-- Generation Time: Oct 14, 2015 at 08:26 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -81,6 +81,44 @@ CREATE TABLE IF NOT EXISTS `donor` (
   `ac_number` int(30) NOT NULL,
   `expiration_date` varchar(10) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `settings`
+--
+
+CREATE TABLE IF NOT EXISTS `settings` (
+  `field_name` varchar(1024) NOT NULL,
+  `state` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `settings`
+--
+
+INSERT INTO `settings` (`field_name`, `state`) VALUES
+('Contribution Type', 1),
+('Amount', 1),
+('Donor Name', 1),
+('Address', 1),
+('Zip Code', 1),
+('City', 1),
+('State', 1),
+('Telephone', 1),
+('Email', 1),
+('Employer', 1),
+('Occupation', 1),
+('Business Address', 1),
+('Date of Contribution', 1),
+('City Agency', 1),
+('Business Type', 1),
+('Business Entity', 1),
+('Position', 1),
+('Account Holder', 1),
+('Account No.', 1),
+('Card Type', 1),
+('Expiration Date', 1);
 
 --
 -- Indexes for dumped tables
