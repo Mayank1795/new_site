@@ -109,8 +109,8 @@ if (isset($_POST['submit'])) {
     $date_contribution = date('Y-m-d', strtotime($date_contribution));
 
 
-    if ($_POST["inlineRadioOptions"]=='credit') {
-        var_dump($accountNo);
+    if ($_POST["inlineRadioOptions"]=='creditcard') {
+        
     if (!empty($ExpirationD) && !empty($cardType) && !empty($accountHolder)
         && !empty($accountNo) && !empty($Employer) && !empty($email)
         && !empty($zip) && !empty($homeAddress) && !empty($amount)
@@ -127,6 +127,7 @@ if (isset($_POST['submit'])) {
 
     }
     } else {
+        
         if ($Employer!="" and $email!=""
     and $zip!="" and $homeAddress!="" and $amount!=""
         and $committe!="" and $name!="") {
