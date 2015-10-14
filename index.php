@@ -23,6 +23,8 @@ if (isset($_POST['submit'])) {
         $name= $_POST["Input_name"];
         $homeAddress= mysql_real_escape_string($_POST["Input_homeAddress"]);
         $zip = mysql_real_escape_string($_POST["Input_zip"]);
+        $city = mysql_real_escape_string($_POST['Input_city']);
+        $state = mysql_real_escape_string($_POST['Input_state']);
         $telephone = mysql_real_escape_string($_POST["Input_telephone"]);
         $email = mysql_real_escape_string($_POST["Input_email"]);
         $Employer = $_POST["Input_Employer"];
@@ -34,11 +36,12 @@ if (isset($_POST['submit'])) {
         $businessName =  $_POST["Input_businessName"];
         $position = $_POST["Input_position"];
         $accountHolder = mysql_real_escape_string($_POST["Input_accountHolder"]);
-        $cardTypeErr = mysql_real_escape_string($_POST["Input_cardType"]);
+        $cardType = mysql_real_escape_string($_POST["Input_cardType"]);
         $accountNo = mysql_real_escape_string($_POST["Input_accountNo"]);
         $ExpirationD = $_POST["Input_ExpirationD"];
         $committe = $_POST["Input_committe"];
-       
+        $contribution_type = $_POST['inlineRadioOptions'];
+
        if (isset($_POST['inlineRadioOptions'])) {
         if ($_POST['inlineRadioOptions'] == 'cash') {
         if ($amount > 100) {
@@ -98,19 +101,21 @@ if (isset($_POST['submit'])) {
     if (empty($ExpirationD)) {
         $ExpirationDErr = "Please enter your card's expiration date";
     }
-}   
+   
 
     
     $campaignId = get_campaign_id($committe);
 
     $date_contribution = date('Y-m-d', strtotime($date_contribution));
 
-    if (isset($_POST["inlineRadioOptions"])=='credit') {
+
+    if ($_POST["inlineRadioOptions"]=='credit') {
+        var_dump($accountNo);
     if (!empty($ExpirationD) && !empty($cardType) && !empty($accountHolder)
         && !empty($accountNo) && !empty($Employer) && !empty($email)
         && !empty($zip) && !empty($homeAddress) && !empty($amount)
         && !empty($committe) && !empty($name)) {
-
+        
           $query = $db->query("INSERT INTO donor (campaignID, contribution_type, amount, 
           donor_name, address, zip, city, state, telephone, email, employer_type,
           occupation, business_address, date_contribution, city_agency, business_type,
@@ -129,17 +134,15 @@ if (isset($_POST['submit'])) {
           $query = $db->query("INSERT INTO donor (campaignID, contribution_type, amount, 
           donor_name, address, zip, city, state, telephone, email, employer_type,
           occupation, business_address, date_contribution, city_agency, business_type,
-          business_entity, position, ac_holder, card_type, ac_number, expiration_date) VALUES 
+          business_entity, position) VALUES 
          ('$campaignId', '$contribution_type', '$amount', '$name', '$homeAddress', '$zip', '$city', '$state',
          '$telephone', '$email', '$Employer', '$Occupation', '$businessAdd', '$date_contribution',
-         '$Agency', '$businessType', '$businessName', '$position', '$accountHolder', '$cardType', '$accountNo', 
-         '$ExpirationD')");
-
+         '$Agency', '$businessType', '$businessName', '$position')");
     }
 
    
 }
-
+}
 ?>
 
 <!DOCTYPE html>
