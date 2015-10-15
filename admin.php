@@ -3,6 +3,8 @@ require('config.php');
 require('functions.php');
 
 
+
+
 ?>
 
 <!DOCTYPE html>
@@ -88,7 +90,7 @@ require('functions.php');
                                             <td><?php echo $row['field_name']; ?></td>
                                             <form action='' method="post">
                                                 <input type="hidden" name="field_name" value="<?php echo $row['field_name']; ?>">
-                                                <td><input type="checkbox" name="my-checkbox" checked></td>
+                                                <td><input class="cat" type="checkbox" name="my-checkbox" id="cat<?php echo $i;?>"></td>
                                                
                                             </form>
                                             <tr>
@@ -97,6 +99,7 @@ require('functions.php');
                                         
                                     </tbody>
                                 </table>
+                                
                             </div>
                             <!-- /.table-responsive -->
                         </div>
@@ -147,7 +150,30 @@ require('functions.php');
 <script src="js/advanced-form.js"></script>
 
 <script type="text/javascript">
+// Ajax for requirement settings
+$(document).ready(function(){
     $("[name='my-checkbox']").bootstrapSwitch();
+    $('#cat1').change(function() {
+        var state1 = $('#cat1').parent().prop('className');;
+        console.log(state1);
+        console.log(state1.length)
+        jQuery.ajax({
+            type: 'POST',
+            url:'settings.php',
+            dataType: 'json', 
+            data:{'state1':state1, 'catno':'1'},
+            success: function(data){
+                try {
+                    console.log(data);
+                } catch(e) {
+                    alert(e.Message);
+                }
+            }
+
+            });
+    });
+});
+    
 </script>
 </body>
 </html>

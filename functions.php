@@ -1,4 +1,27 @@
 <?php
+
+// 1 - require on switch-on switch-animate 24
+// 0 -not require off switch-off switch-animate 25
+function update_state($new_state, $field_number){
+    global $db;
+    $temp = "";
+    preg_match_all('!\d+!', $field_number, $matches);
+    print_r($matches);
+    $var = implode(' ', $matches[0]);
+
+    if (strlen($new_state)==24) {
+        // switch  on store 1
+        $temp = 1;
+    } elseif (strlen($new_state)==25) {
+        // switch off store 0
+        $temp = 0;
+    }
+
+    $query = $db->query("UPDATE settings SET state ='$temp' WHERE id='$var'");
+    return "Thanks";
+}
+
+
 function get_campaign_id($name){
     global $db;
     $query = $db->query("SELECT campaignID FROM campaigns WHERE name_candidate = '$name'");
