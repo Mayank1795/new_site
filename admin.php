@@ -1,10 +1,6 @@
 <?php 
 require('config.php');
 require('functions.php');
-
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -89,9 +85,13 @@ require('functions.php');
                                             <td><?php echo $i;?></td>    
                                             <td><?php echo $row['field_name']; ?></td>
                                             <form action='' method="post">
-                                                <input type="hidden" name="field_name" value="<?php echo $row['field_name']; ?>">
-                                                <td><input class="cat" type="checkbox" name="my-checkbox" id="cat<?php echo $i;?>"></td>
-                                               
+                                                
+                                                <?php if ($row['state']=='1') {
+                                                 
+                                                 echo '<td><input class="cat" checked type="checkbox" name="my-checkbox" id="cat'.$i.'"></td>'; 
+                                                } else {
+                                                    echo '<td><input class="cat" type="checkbox" name="my-checkbox" id="cat'.$i.'"></td>'; 
+                                                    };?>                                               
                                             </form>
                                             <tr>
 
@@ -153,15 +153,24 @@ require('functions.php');
 // Ajax for requirement settings
 $(document).ready(function(){
     $("[name='my-checkbox']").bootstrapSwitch();
-    $('#cat1').change(function() {
-        var state1 = $('#cat1').parent().prop('className');;
-        console.log(state1);
-        console.log(state1.length)
+    
+    $('.cat').change(function(){
+    
+        var get_id = $(this).attr('id');
+    
+         $('#'+get_id).change(function() {
+        
+        var state1 = $('#'+get_id).parent().prop('className');
+        // console.log(state1);
+        // console.log(state1.length)
+        get_id = get_id.replace(/[^\d.]/g,'');
+        // console.log(get_id);
+        var cat_num = get_id;
         jQuery.ajax({
             type: 'POST',
             url:'settings.php',
             dataType: 'json', 
-            data:{'state1':state1, 'catno':'1'},
+            data:{'state1':state1, 'catno':cat_num},
             success: function(data){
                 try {
                     console.log(data);
@@ -171,6 +180,7 @@ $(document).ready(function(){
             }
 
             });
+    });
     });
 });
     
