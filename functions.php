@@ -21,6 +21,16 @@ function update_state($new_state, $field_number){
     return "Thanks";
 }
 
+function requirement_status(){
+    $states = array();
+    global $db;
+    $query = $db->query("SELECT * FROM settings");
+    $query = $query->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($query as $value) {
+        $states = $value['state'];
+    }
+    return $states;
+}
 
 function get_campaign_id($name){
     global $db;

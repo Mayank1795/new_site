@@ -40,6 +40,9 @@ if (isset($_POST['submit'])) {
         $accountNo = mysql_real_escape_string($_POST["Input_accountNo"]);
         $ExpirationD = $_POST["Input_ExpirationD"];
         $committe = $_POST["Input_committe"];
+        if (!isset($_POST['inlineRadioOptions'])) {
+            $radioErr = 'Please select the contribution type.';
+        } else{
         $contribution_type = $_POST['inlineRadioOptions'];
 
        if (isset($_POST['inlineRadioOptions'])) {
@@ -53,6 +56,7 @@ if (isset($_POST['submit'])) {
         
     }
        }
+   }
     
     if (empty($name)) {
        $nameErr = 'Please enter your name.';
@@ -109,7 +113,7 @@ if (isset($_POST['submit'])) {
     $date_contribution = date('Y-m-d', strtotime($date_contribution));
 
 
-    if ($_POST["inlineRadioOptions"]=='creditcard') {
+    if (isset($_POST['inlineRadioOptions']) and $_POST["inlineRadioOptions"]=='creditcard') {
         
     if (!empty($ExpirationD) && !empty($cardType) && !empty($accountHolder)
         && !empty($accountNo) && !empty($Employer) && !empty($email)
