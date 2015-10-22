@@ -1,7 +1,15 @@
 <?php require('includes/config.php'); 
+require('functions.php');
 
 //if not logged in redirect to login page
 if(!$user->is_logged_in()){ header('Location: index.php'); } 
+
+$username = $_SESSION['username'];
+
+$details = get_campaign_details($username);
+
+
+
 
 //define page title
 
@@ -245,13 +253,13 @@ if(!$user->is_logged_in()){ header('Location: index.php'); }
         <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
                 
-                <span class="username">John Doe</span>
+                <span class="username"><?php echo $details[0]['name_person']; ?></span>
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu extended logout">
                 <li><a href="index.html#"><i class=" fa fa-suitcase"></i>Profile</a></li>
                 <li><a href="index.html#"><i class="fa fa-cog"></i> Settings</a></li>
-                <li><a href="login.html"><i class="fa fa-key"></i> Log Out</a></li>
+                <li><a href="logout.php"><i class="fa fa-key"></i> Log Out</a></li>
             </ul>
         </li>
         <!-- user login dropdown end -->
@@ -317,6 +325,32 @@ if(!$user->is_logged_in()){ header('Location: index.php'); }
 <!--main content start-->
 <section id="main-content">
 <section class="wrapper">
+
+<div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <!--widget start-->
+                        <aside class="profile-nav alt">
+                            <section class="panel">
+                                <div class="user-heading alt gray-bg">
+                                    
+                                    <h1>Name of the person registered: <?php echo $details[0]['name_person']; ?> </h1>
+                                    <p>Candidate Name: <?php echo $details[0]['name_candidate']; ?> </p>
+                                </div>
+
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li><a href="javascript:;"> <i class="fa fa-calendar-o"></i> Election Year <span class="badge label-success pull-right r-activity"><?php echo $details[0]['election_year']; ?></span></a></li>
+                                    <li><a href="javascript:;"> <i class="fa fa-tasks"></i> Election Type <span class="badge label-success pull-right r-activity"><?php echo $details[0]['election_type']; ?></span></a></li>
+                                    <li><a href="javascript:;"> <i class="fa fa-home"></i> Office Sought <span class="badge label-success pull-right r-activity"><?php echo $details[0]['office_sought']; ?></span></a></li>
+                                    <li><a href="javascript:;"> <i class="fa fa-user"></i> Username <span class="badge label-success pull-right r-activity"><?php echo $details[0]['username']; ?></span></a></li>
+                                    <li><a href="javascript:;"> <i class="fa fa-envelope-o"></i> Email <span class="badge label-success pull-right r-activity"><?php echo $details[0]['email']; ?></span></a></li>
+                                </ul>
+
+                            </section>
+                        </aside>
+                        <!--widget end-->
+
+                    </div>
+                </div>
 
 
 </section>

@@ -340,7 +340,7 @@ if (isset($_POST['submit'])) {
 
                             <div class="form-group">
                             <div class="col-lg-10 col-lg-offset-1">
-                            <p>To comply with New York zip Campaign Finance Board reporting requirements, provide your employment information. If you are not employed, indicate what best describes your employment status (e.g., “homemaker”, “retired”, “student,” or “unemployed”). If self-employed, indicate employer as “self” and provide your occupation and employment address.</p>
+                            <p class="checks">To comply with New York zip Campaign Finance Board reporting requirements, provide your employment information. If you are not employed, indicate what best describes your employment status (e.g., “homemaker”, “retired”, “student,” or “unemployed”). If self-employed, indicate employer as “self” and provide your occupation and employment address.</p>
                             </div>
                             </div>
 
@@ -364,12 +364,12 @@ if (isset($_POST['submit'])) {
                             </div>
                             <div class="form-group" id="hide-me">
                             <div class="col-lg-10 col-lg-offset-1"> 
-                            <p>I understand that State law requires that a contribution be in my name and be from my own funds. I hereby affirm that this contribution is being made from my personal funds, is not being reimbursed in any manner, and is not being made as a loan.
+                            <p class="checks">I understand that State law requires that a contribution be in my name and be from my own funds. I hereby affirm that this contribution is being made from my personal funds, is not being reimbursed in any manner, and is not being made as a loan.
                             </p></div></div>
 
                             <div class="form-group" style='display:none' id="show-me">
                             <div class="col-lg-10 col-lg-offset-1" > 
-                            <p>I understand that State law requires that a contribution be in my name and ve from my own funds. I hereby affirm this contribution made from my personal funds, is not being reimbursed in any manner and is not being as a loan, in addiion, in the case of a credit card contribution, I also hereby affirm tha this contribution is being made from my personal credit card account, billed to and paid by me for my personal use, and has no corporate or business affiliation.
+                            <p class="checks">I understand that State law requires that a contribution be in my name and ve from my own funds. I hereby affirm this contribution made from my personal funds, is not being reimbursed in any manner and is not being as a loan, in addiion, in the case of a credit card contribution, I also hereby affirm tha this contribution is being made from my personal credit card account, billed to and paid by me for my personal use, and has no corporate or business affiliation.
                             </p></div></div>
 
                         <div class="form-group">
@@ -381,8 +381,8 @@ if (isset($_POST['submit'])) {
 
                             <div class="form-group">
                             <div class="col-lg-10 col-lg-offset-1"> 
-                            <p>If a contributor has business dealings with the zip as defined in the Campaign Finance Act, such contributor may contribute only up to $250 for zip council, $320 for borough president and $400 for mayor, comptroller or public advocate.
-                            </p><p>If you are “doing business” with the zip, please complete the following:</p>
+                            <p class="checks">If a contributor has business dealings with the zip as defined in the Campaign Finance Act, such contributor may contribute only up to $250 for zip council, $320 for borough president and $400 for mayor, comptroller or public advocate.
+                            </p><p class="checks">If you are “doing business” with the zip, please complete the following:</p>
                             </div></div>
 
                         <div class="form-group">
