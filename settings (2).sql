@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 15, 2015 at 09:32 AM
+-- Generation Time: Nov 03, 2015 at 12:12 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -38,26 +38,26 @@ CREATE TABLE IF NOT EXISTS `settings` (
 
 INSERT INTO `settings` (`id`, `field_name`, `state`) VALUES
 (1, 'Contribution Type', 0),
-(2, 'Amount', 1),
-(3, 'Donor Name', 1),
+(2, 'Amount', 0),
+(3, 'Donor Name', 0),
 (4, 'Address', 1),
-(5, 'Zip Code', 1),
-(6, 'City', 1),
+(5, 'Zip Code', 0),
+(6, 'City', 0),
 (7, 'State', 1),
 (8, 'Telephone', 1),
-(9, 'Email', 1),
+(9, 'Email', 0),
 (10, 'Employer', 1),
 (11, 'Occupation', 1),
-(12, 'Business Address', 1),
+(12, 'Business Address', 0),
 (13, 'Date of Contribution', 1),
-(14, 'City Agency', 1),
+(14, 'City Agency', 0),
 (15, 'Business Type', 1),
-(16, 'Business Entity', 1),
+(16, 'Business Entity', 0),
 (17, 'Position', 1),
 (18, 'Account Holder', 1),
-(19, 'Account No.', 1),
+(19, 'Account No.', 0),
 (20, 'Card Type', 1),
-(21, 'Expiration Date', 1);
+(21, 'Expiration Date', 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
