@@ -8,6 +8,10 @@ $username = $_SESSION['username'];
 
 $details = get_campaign_details($username);
 
+$campaignID = get_campaign_id($username);
+
+$campaignID= $campaignID[0]['campaignID'];
+
 
 
 
@@ -29,7 +33,7 @@ $details = get_campaign_details($username);
     <meta http-equiv=”X-UA-Compatible” content=”IE=9”>
 
     
-    <title>Campaign | Dashboard</title>
+    <title>Campaign | Cards</title>
     <!--Core CSS -->
     <link href="../bs3/css/bootstrap.min.css" rel="stylesheet">
     <link href="../js/jquery-ui/jquery-ui-1.10.1.custom.min.css" rel="stylesheet">
@@ -276,13 +280,13 @@ $details = get_campaign_details($username);
         <div class="leftside-navigation">
             <ul class="sidebar-menu" id="nav-accordion">
                 <li>
-                    <a class="active" href="dashboard.php">
+                    <a href="dashboard.php">
                         <i class="fa fa-dashboard"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a href="cards.php">
+                    <a class="active" href="cards.php">
                         <i class="fa fa-laptop"></i>
                         <span>Contribution Cards</span>
                     </a>
@@ -326,31 +330,32 @@ $details = get_campaign_details($username);
 <section id="main-content">
 <section class="wrapper">
 
-<div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        <!--widget start-->
-                        <aside class="profile-nav alt">
-                            <section class="panel">
-                                <div class="user-heading alt gray-bg">
-                                    
-                                    <h1>Name of the person registered: <?php echo $details[0]['name_person']; ?> </h1>
-                                    <p>Candidate Name: <?php echo $details[0]['name_candidate']; ?> </p>
-                                </div>
-
-                                <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="javascript:;"> <i class="fa fa-calendar-o"></i> Election Year <span class="badge label-success pull-right r-activity"><?php echo $details[0]['election_year']; ?></span></a></li>
-                                    <li><a href="javascript:;"> <i class="fa fa-tasks"></i> Election Type <span class="badge label-success pull-right r-activity"><?php echo $details[0]['election_type']; ?></span></a></li>
-                                    <li><a href="javascript:;"> <i class="fa fa-home"></i> Office Sought <span class="badge label-success pull-right r-activity"><?php echo $details[0]['office_sought']; ?></span></a></li>
-                                    <li><a href="javascript:;"> <i class="fa fa-user"></i> Username <span class="badge label-success pull-right r-activity"><?php echo $details[0]['username']; ?></span></a></li>
-                                    <li><a href="javascript:;"> <i class="fa fa-envelope-o"></i> Email <span class="badge label-success pull-right r-activity"><?php echo $details[0]['email']; ?></span></a></li>
-                                </ul>
-
-                            </section>
-                        </aside>
-                        <!--widget end-->
-
-                    </div>
+                <?php
+                $query = $db->query("SELECT * FROM donor WHERE campaignID = '$campaignID'");
+                $query = $query->fetchAll(PDO::FETCH_ASSOC);
+                foreach ($query as $row) 
+                    {                         
+                      echo  '<div class="col-md-3">
+                            <a href="a.html">
+                <div class="feed-box text-center" >
+                    <section class="panel" >
+                        <div class="panel-body">
+                            
+                            
+                            <h1>Donor: '.$row["donor_name"].'</h1>
+                            <p style="color:#767676">Contribution Type: '.$row["contribution_type"].'</p>
+                            <p style="color:#767676">Amount: '.$row["amount"].'</p>
+                             
+                        </div>
+                    </section>
+                </a>
                 </div>
+                </div>' ;
+            }
+            ?>
+
+                   
+               
 
 
 </section>

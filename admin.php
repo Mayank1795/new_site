@@ -11,8 +11,8 @@ require('functions.php');
     <meta name="description" content="">
     <meta name="author" content="DonorForm">
 
-    <meta http-equiv=”X-UA-Compatible” content=”IE=EmulateIE9”>
-    <meta http-equiv=”X-UA-Compatible” content=”IE=9”>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
 
     
     <title>Application</title>

@@ -8,4 +8,12 @@ function get_campaign_details($username){
     return $query;
 }
 
+function get_campaign_id($username){
+    global $db;
+    $query = $db->query("SELECT campaignID FROM campaigns WHERE username = '$username'");
+    $query = $query->fetchAll(PDO::FETCH_ASSOC);
+    if ($query)
+    return $query;
+}
+
 ?>
