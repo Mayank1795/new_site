@@ -8,10 +8,8 @@ $username = $_SESSION['username'];
 
 $details = get_campaign_details($username);
 
+$id=31;
 
-
-
-//define page title
 
 
 
@@ -29,7 +27,7 @@ $details = get_campaign_details($username);
     <meta http-equiv=”X-UA-Compatible” content=”IE=9”>
 
     
-    <title>Campaign | Dashboard</title>
+    <title>Campaign | Cards</title>
     <!--Core CSS -->
     <link href="../bs3/css/bootstrap.min.css" rel="stylesheet">
     <link href="../js/jquery-ui/jquery-ui-1.10.1.custom.min.css" rel="stylesheet">
@@ -276,13 +274,13 @@ $details = get_campaign_details($username);
         <div class="leftside-navigation">
             <ul class="sidebar-menu" id="nav-accordion">
                 <li>
-                    <a class="active" href="dashboard.php">
+                    <a href="dashboard.php">
                         <i class="fa fa-dashboard"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a href="cards.php">
+                    <a class="active" href="cards.php">
                         <i class="fa fa-laptop"></i>
                         <span>Contribution Cards</span>
                     </a>
@@ -323,37 +321,259 @@ $details = get_campaign_details($username);
 </aside>
 <!--sidebar end-->
 <!--main content start-->
-<section id="main-content">
-<section class="wrapper">
+ <section id="main-content">
+    <section class="wrapper">
+        <!-- page start-->
 
-<div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        <!--widget start-->
-                        <aside class="profile-nav alt">
-                            <section class="panel">
-                                <div class="user-heading alt gray-bg">
-                                    
-                                    <h1>Name of the person registered: <?php echo $details[0]['name_person']; ?> </h1>
-                                    <p>Candidate Name: <?php echo $details[0]['name_candidate']; ?> </p>
-                                </div>
+        <div class="row">
+            <div class="col-md-12">
+                <section class="panel">
+                    <div class="panel-body invoice">
+                        <div class="invoice-header">
+                            <div class="invoice-title col-md-3 col-xs-2">
+                                <h1>Donor Info</h1>
+                                
+                            </div>
+                            
+                        </div>
+                        
+                        <table class="table table-invoice" >
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Attributes</th>
+                                <th class="text-center">Information</th>
+                               
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                                <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="javascript:;"> <i class="fa fa-calendar-o"></i> Election Year <span class="badge label-success pull-right r-activity"><?php echo $details[0]['election_year']; ?></span></a></li>
-                                    <li><a href="javascript:;"> <i class="fa fa-tasks"></i> Election Type <span class="badge label-success pull-right r-activity"><?php echo $details[0]['election_type']; ?></span></a></li>
-                                    <li><a href="javascript:;"> <i class="fa fa-home"></i> Office Sought <span class="badge label-success pull-right r-activity"><?php echo $details[0]['office_sought']; ?></span></a></li>
-                                    <li><a href="javascript:;"> <i class="fa fa-user"></i> Username <span class="badge label-success pull-right r-activity"><?php echo $details[0]['username']; ?></span></a></li>
-                                    <li><a href="javascript:;"> <i class="fa fa-envelope-o"></i> Email <span class="badge label-success pull-right r-activity"><?php echo $details[0]['email']; ?></span></a></li>
-                                </ul>
+                            <?php
+                        $query = $db->query("SELECT * FROM donor WHERE donor_id = '$id'");
+                        $query = $query->fetchAll(PDO::FETCH_ASSOC);
+                        
+                        foreach ($query as $row) 
+                            {            
+                            echo "<tr>";
+                                echo "<td>1</td>";
 
-                            </section>
-                        </aside>
-                        <!--widget end-->
+                                echo "<td><h4>"."Donor Name"."</h4></td>";
+
+                                echo '<td class="text-center">'.$row['donor_name'].'</td>';
+                                echo "</tr>";
+
+                            echo "<tr>";
+                                echo "<td>2</td>";
+
+                                echo "<td><h4>"."Contribution Type"."</h4></td>";
+
+                                
+                                echo '<td class="text-center">'.$row['contribution_type'].'</td>';
+                                echo "</tr>";
+
+                            echo "<tr>";
+                                echo "<td>3</td>";
+
+                                echo "<td><h4>"."Amount"."</h4></td>";
+
+                                
+                                echo '<td class="text-center">'.$row['amount'].'</td>';
+                                echo "</tr>";
+
+                            echo "<tr>";
+                                echo "<td>4</td>";
+
+                                echo "<td><h4>"."Address"."</h4></td>";
+
+                                
+                                echo '<td class="text-center">'.$row['address'].'</td>';
+                                echo "</tr>";
+
+                            echo "<tr>";
+                                echo "<td>5</td>";
+
+                                echo "<td><h4>"."Zip"."</h4></td>";
+
+                                
+                                echo '<td class="text-center">'.$row['zip'].'</td>';
+                                echo "</tr>";
+
+                                
+                            echo "<tr>";
+                                echo "<td>6</td>";
+
+                                echo "<td><h4>"."City"."</h4></td>";
+
+                                
+                                echo '<td class="text-center">'.$row['city'].'</td>';   
+                                echo "</tr>";
+
+                                
+                            echo "<tr>";
+                                echo "<td>7</td>";
+
+                                echo "<td><h4>"."State"."</h4></td>";
+
+                                
+                                echo '<td class="text-center">'.$row['state'].'</td>'; 
+                                echo "</tr>";  
+
+                               
+                            echo "<tr>";
+                                echo "<td>8</td>";
+
+                                echo "<td><h4>"."Telephone"."</h4></td>";
+
+                                
+                                echo '<td class="text-center">'.$row['telephone'].'</td>'; 
+                                echo "</tr>";  
+
+                                
+                            echo "<tr>";
+                                echo "<td>9</td>";
+
+                                echo "<td><h4>"."Email"."</h4></td>";
+
+                                
+                                echo '<td class="text-center">'.$row['email'].'</td>';  
+                                echo "</tr>"; 
+
+                               
+                            echo "<tr>";
+                                echo "<td>10</td>";
+
+                                echo "<td><h4>"."Employer Type"."</h4></td>";
+
+                                
+                                echo '<td class="text-center">'.$row['employer_type'].'</td>';   
+
+                               
+                                echo "</tr>";
+
+                            echo "<tr>";
+                                echo "<td>11</td>";
+
+                                echo "<td><h4>"."Occupation"."</h4></td>";
+
+                                
+                                echo '<td class="text-center">'.$row['occupation'].'</td>'; 
+                                echo "</tr>";  
+
+                               
+                            echo "<tr>";
+                                echo "<td>12</td>";
+
+                                echo "<td><h4>"."Business Address"."</h4></td>";
+
+                                
+                                echo '<td class="text-center">'.$row['business_address'].'</td>';
+                                echo "</tr>";   
+
+                               
+                            echo "<tr>";
+                                echo "<td>13</td>";
+
+                                echo "<td><h4>"."Date of Contribution"."</h4></td>";
+
+                                
+                                echo '<td class="text-center">'.$row['date_contribution'].'</td>';   
+
+                                
+                                echo "</tr>";
+
+                            echo "<tr>";
+                                echo "<td>14</td>";
+
+                                echo "<td><h4>"."City Agency"."</h4></td>";
+
+                                
+                                echo '<td class="text-center">'.$row['city_agency'].'</td>';  
+                                echo "</tr>"; 
+
+                               
+                            echo "<tr>";
+                                echo "<td>15</td>";
+
+                                echo "<td><h4>"."Business Type"."</h4></td>";
+
+                                
+                                echo '<td class="text-center">'.$row['business_type'].'</td>';
+
+                                echo "</tr>";  
+
+                            echo "<tr>";
+                                echo "<td>16</td>";
+
+                                echo "<td><h4>"."Business Entity"."</h4></td>";
+
+                                
+                                echo '<td class="text-center">'.$row['business_entity'].'</td>';
+                                echo "</tr>";
+
+                            echo "<tr>";
+                                echo "<td>17</td>";
+
+                                echo "<td><h4>"."Position"."</h4></td>";
+
+                                
+                                echo '<td class="text-center">'.$row['position'].'</td>'; 
+                                echo "</tr>"; 
+
+                            if($row['contribution_type']=="creditcard")
+                            {
+                                echo "<tr>";
+                                echo "<td>19</td>";
+
+                                echo "<td><h4>"."Account Holder"."</h4></td>";
+
+                                
+                                echo '<td class="text-center">'.$row['ac_holder'].'</td>'; 
+                                echo "</tr>";
+
+                                echo "<tr>";
+                                echo "<td>20</td>";
+
+                                echo "<td><h4>"."Card Type"."</h4></td>";
+
+                                
+                                echo '<td class="text-center">'.$row['card_type'].'</td>'; 
+                                echo "</tr>";
+
+                                echo "<tr>";
+                                echo "<td>21</td>";
+
+                                echo "<td><h4>"."Account Number"."</h4></td>";
+
+                                
+                                echo '<td class="text-center">'.$row['ac_number'].'</td>';
+                                echo "</tr>"; 
+
+                                echo "<tr>";
+                                echo "<td>22</td>";
+
+                                echo "<td><h4>"."Expiration Date"."</h4></td>";
+
+                                
+                                echo '<td class="text-center">'.$row['expiration_date'].'</td>'; 
+                                echo "</tr>";
+
+                            }   
+
+                            }
+                            ?>
+                            
+                            </tbody>
+                        </table>
+                        
+
+                       
 
                     </div>
-                </div>
-
-
-</section>
+                </section>
+            </div>
+        </div>
+        <!-- page end-->
+    </section>
 </section>
 <!-- Placed js at the end of the document so the pages load faster -->
 <script src="../js/jquery.js"></script>

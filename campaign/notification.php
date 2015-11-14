@@ -62,7 +62,7 @@ $notify_email = $details[0]['notify_email'];
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
-    <meta name="author" content="ThemeBucket">
+    <meta name="author" content="">
 
     <meta http-equiv=”X-UA-Compatible” content=”IE=EmulateIE9”>
     <meta http-equiv=”X-UA-Compatible” content=”IE=9”>
