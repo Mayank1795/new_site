@@ -8,7 +8,7 @@ $username = $_SESSION['username'];
 
 $details = get_campaign_details($username);
 
-$id=31;
+$id=$_GET['id'];
 
 
 
@@ -280,7 +280,7 @@ $id=31;
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a class="active" href="cards.php">
+                    <a href="cards.php">
                         <i class="fa fa-laptop"></i>
                         <span>Contribution Cards</span>
                     </a>

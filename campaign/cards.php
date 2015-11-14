@@ -336,7 +336,7 @@ $campaignID= $campaignID[0]['campaignID'];
                 foreach ($query as $row) 
                     {                         
                       echo  '<div class="col-md-3">
-                            <a href="a.html">
+                            <a href="cards_info.php?id='.$row["donor_id"].'">
                 <div class="feed-box text-center" >
                     <section class="panel" >
                         <div class="panel-body">
