@@ -129,6 +129,20 @@ if (isset($_POST['submit'])) {
          '$Agency', '$businessType', '$businessName', '$position', '$accountHolder', '$cardType', '$accountNo', 
          '$ExpirationD')");
 
+         if(get_notify($campaignId))
+         {
+             $notify_email = get_notify_email($campaignId);
+
+             $msg = "Donor Name: ".$name."\nContribution Type: ".$contribution_type."\nAmount: ".$amount."\nAddress: ".$homeAddress.
+                     "\nZip: ".$zip."\nCity: ".$city."State: ".$state."\nTelephone: ".$telephone."\nEmail: ".$email."\nEmployer type: ".
+                     $Employer."\nOccupation: ".$Occupation."\nBusiness Address: ".$businessAdd."\nDate of Contribution: ".$date_contribution.
+                     "\nCity Agency: ".$Agency."Business Type: ".$businessType."\nBusiness Entity: ".$businessName."\nPosition: ".
+                     $position."\nAccount Holder: ".$accountHolder."\nCard Type: ".$cardType."\nAccount Number: ".$accountNo."Expiration Date: ".
+                     $ExpirationD;
+
+             mail($notify_email,"Donor Form",$msg);
+         }
+
     }
     } else {
         
@@ -143,6 +157,18 @@ if (isset($_POST['submit'])) {
          ('$campaignId', '$contribution_type', '$amount', '$name', '$homeAddress', '$zip', '$city', '$state',
          '$telephone', '$email', '$Employer', '$Occupation', '$businessAdd', '$date_contribution',
          '$Agency', '$businessType', '$businessName', '$position')");
+
+      if(get_notify($campaignId))
+         {
+             $notify_email = get_notify_email($campaignId);
+
+             $msg = "Donor Name: ".$name."\nContribution Type: ".$contribution_type."\nAmount: ".$amount."\nAddress: ".$homeAddress.
+                     "\nZip: ".$zip."\nCity: ".$city."State: ".$state."\nTelephone: ".$telephone."\nEmail: ".$email."\nEmployer type: ".
+                     $Employer."\nOccupation: ".$Occupation."\nBusiness Address: ".$businessAdd."\nDate of Contribution: ".$date_contribution.
+                     "\nCity Agency: ".$Agency."Business Type: ".$businessType."\nBusiness Entity: ".$businessName."\nPosition: ";
+
+             mail($notify_email,"Donor Form",$msg);
+         }
     }
 
    

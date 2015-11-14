@@ -44,6 +44,32 @@ function get_campaign_id($name){
 
 }
 
+function get_notify($campaignID){
+    global $db;
+    $query = $db->query("SELECT notify FROM campaigns WHERE campaignID = '$campaignID'");
+    $query = $query->fetchAll(PDO::FETCH_ASSOC);
+    if (!$query) {
+            return $db->errorInfo();;
+        } else {
+            return $query[0]['notify'];
+        }
+
+
+}
+
+function get_notify_email($campaignID){
+    global $db;
+    $query = $db->query("SELECT notify_email FROM campaigns WHERE campaignID = '$campaignID'");
+    $query = $query->fetchAll(PDO::FETCH_ASSOC);
+    if (!$query) {
+            return $db->errorInfo();;
+        } else {
+            return $query[0]['notify_email'];
+        }
+
+
+}
+
 function get_contributor_name(){
     global $db;
     $query = $db->query("SELECT name_candidate FROM campaigns ORDER BY name_candidate");

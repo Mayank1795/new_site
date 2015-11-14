@@ -300,7 +300,7 @@ $campaignID= $campaignID[0]['campaignID'];
                     
                 </li>
                 <li>
-                    <a href="fontawesome.html">
+                    <a href="notification.php">
                         <i class="fa fa-bullhorn"></i>
                         <span>Notification</span>
                     </a>
