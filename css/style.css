@@ -3329,9 +3329,7 @@ input:focus:invalid:focus,textarea:focus:invalid:focus,select:focus:invalid:focu
     color:#8b8b8b;
     font-weight:400;
 }
-.feed-box a {
-    color:#3ac7f9;
-}
+
 .profile-nav .user-heading.clock-row {
     padding:20px;
 }

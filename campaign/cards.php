@@ -293,7 +293,7 @@ $campaignID= $campaignID[0]['campaignID'];
                     
                 </li>
                 <li class="sub-menu">
-                    <a href="javascript:;">
+                    <a href="cards_data.php">
                         <i class="fa fa-book"></i>
                         <span>Contribution Data</span>
                     </a>

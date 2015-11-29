@@ -287,7 +287,7 @@ $id=$_GET['id'];
                     
                 </li>
                 <li class="sub-menu">
-                    <a href="javascript:;">
+                    <a href="cards_data.php">
                         <i class="fa fa-book"></i>
                         <span>Contribution Data</span>
                     </a>

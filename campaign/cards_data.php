@@ -6,51 +6,16 @@ if(!$user->is_logged_in()){ header('Location: index.php'); }
 
 $username = $_SESSION['username'];
 
-
+$details = get_campaign_details($username);
 
 $campaignID = get_campaign_id($username);
 
 $campaignID= $campaignID[0]['campaignID'];
 
 
-if(isset($_POST['submit'])){
-
-    $email = $_POST['email'];
-    $email = mysql_real_escape_string($_POST['email']);
-
-    if(isset($_POST['notification']))
-    {
-        $notification=1;
-    }
-    else
-        $notification=0;
 
 
-    if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
-        $error[] = 'Please enter a valid email address';
-    }
-
-
-
-    if(!isset($error)){
-
-        
-
-        $db->query("UPDATE campaigns SET notify ='$notification', notify_email='$email' WHERE campaignID='$campaignID'");
-
-        
-    }
-}
-
-$details = get_campaign_details($username);
-
-$notify = $details[0]['notify'];
-
-$notify_email = $details[0]['notify_email'];
-
-
-
-
+//define page title
 
 
 
@@ -68,25 +33,24 @@ $notify_email = $details[0]['notify_email'];
     <meta http-equiv=”X-UA-Compatible” content=”IE=9”>
 
     
-    <title>Campaign | Notification</title>
-   <!--Core CSS -->
+    <title>Campaign | Cards</title>
+    <!--Core CSS -->
     <link href="../bs3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../js/jquery-ui/jquery-ui-1.10.1.custom.min.css" rel="stylesheet">
     <link href="../css/bootstrap-reset.css" rel="stylesheet">
-    <link href="../font-awesome/css/font-awesome.css" rel="stylesheet" />
-
-    <link rel="stylesheet" href="../css/bootstrap-switch.css" />
-
-
- 
-
+    <link href="../font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="../js/jvector-map/jquery-jvectormap-1.2.2.css" rel="stylesheet">
+    <link href="../css/clndr.css" rel="stylesheet">
+    <!--clock css-->
+    <link href="../js/css3clock/css/style.css" rel="stylesheet">
+    <!--Morris Chart CSS -->
+    <link rel="stylesheet" href="../js/morris-chart/morris.css">
     <!-- Custom styles for this template -->
     <link href="../css/style.css" rel="stylesheet">
-    <link href="../css/style-responsive.css" rel="stylesheet" />
-
+    <link href="../css/style-responsive.css" rel="stylesheet"/>
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]>
     <script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
-
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -191,7 +155,7 @@ $notify_email = $details[0]['notify_email'];
                 </li>
                 <li>
                     <a href="index.html#">
-                        <span class="photo"><img alt="avatar" src="#"></span>
+                        <span class="photo"><img alt="avatar" src="images/avatar-mini.jpg"></span>
                                 <span class="subject">
                                 <span class="from">Jonathan Smith</span>
                                 <span class="time">Just now</span>
@@ -203,7 +167,7 @@ $notify_email = $details[0]['notify_email'];
                 </li>
                 <li>
                     <a href="index.html#">
-                        <span class="photo"><img alt="avatar" src="#"></span>
+                        <span class="photo"><img alt="avatar" src="images/avatar-mini-2.jpg"></span>
                                 <span class="subject">
                                 <span class="from">Jane Doe</span>
                                 <span class="time">2 min ago</span>
@@ -215,7 +179,7 @@ $notify_email = $details[0]['notify_email'];
                 </li>
                 <li>
                     <a href="index.html#">
-                        <span class="photo"><img alt="avatar" src="#"></span>
+                        <span class="photo"><img alt="avatar" src="images/avatar-mini-3.jpg"></span>
                                 <span class="subject">
                                 <span class="from">Tasi sam</span>
                                 <span class="time">2 days ago</span>
@@ -227,7 +191,7 @@ $notify_email = $details[0]['notify_email'];
                 </li>
                 <li>
                     <a href="index.html#">
-                        <span class="photo"><img alt="avatar" src="#"></span>
+                        <span class="photo"><img alt="avatar" src="images/avatar-mini.jpg"></span>
                                 <span class="subject">
                                 <span class="from">Mr. Perfect</span>
                                 <span class="time">2 hour ago</span>
@@ -329,14 +293,14 @@ $notify_email = $details[0]['notify_email'];
                     
                 </li>
                 <li class="sub-menu">
-                    <a href="cards_data.php">
+                    <a class="active" href="cards_data.php">
                         <i class="fa fa-book"></i>
                         <span>Contribution Data</span>
                     </a>
                     
                 </li>
                 <li>
-                    <a class="active" href="notification.php">
+                    <a href="notification.php">
                         <i class="fa fa-bullhorn"></i>
                         <span>Notification</span>
                     </a>
@@ -365,56 +329,47 @@ $notify_email = $details[0]['notify_email'];
 <!--main content start-->
 <section id="main-content">
 <section class="wrapper">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="feed-box text-center" >
+                    <section class="panel" >
+                        <div class="panel-body">
+        
+    <a href="pdf_download.php?id=all" type="button"  class="btn btn-primary"><i class="fa fa-download"></i> Download All PDF</a>
+    <a href="csv_download.php" type="button"  class="btn btn-primary"><i class="fa fa-download"></i> Download All CSV</a>
+    <a href="excel_download.php" type="button"  class="btn btn-primary"><i class="fa fa-download"></i> Download All EXCEL</a>
+</div>
+</section>
+</div>
 
-    
+    </div>
+    <div>
 
+                <?php
+                $query = $db->query("SELECT * FROM donor WHERE campaignID = '$campaignID'");
+                $query = $query->fetchAll(PDO::FETCH_ASSOC);
+                foreach ($query as $row) 
+                    {                         
+                      echo  '<div class="col-md-3">
+                            
+                <div class="feed-box text-center" >
+                    <section class="panel" >
+                        <div class="panel-body">
+                            
+                            
+                            <h1>Donor: '.$row["donor_name"].'</h1>
+                            <p style="color:#767676">Contribution Type: '.$row["contribution_type"].'</p>
+                            <p style="color:#767676">Amount: '.$row["amount"].'</p>
+
+                            <a href="pdf_download.php?id='.$row["donor_id"].'" type="button"  class="btn btn-primary"><i class="fa fa-download"></i> Download PDF</a>
+                             
+                        </div>
+                    </section>
                 
-
-                 <div class="row">
-            <div class="col-md-12">
-                <section class="panel">
-                    <header class="panel-heading">
-                        Notification
-                        <span class="tools pull-right">
-                            <a href="javascript:;" class="fa fa-chevron-down"></a>
-                            
-                            <a href="javascript:;" class="fa fa-times"></a>
-                         </span>
-                    </header>
-                    <div class="panel-body toggle-heading">
-                        <?php
-                        if(isset($error)){
-                                        foreach($error as $error){
-                                            echo '<div><span class="label label-danger">'.$error.'</div></span>';
-                                        }
-                                    }
-                        ?>
-                        <form action='' method="post" name="submit">
-                            <div>
-                        
-                            <label class=" control-label col-md-2" >Notification</label>
-                            <input type="checkbox" name="notification" value="1" <?php if($notify ==1)echo 'checked';?> >
-                        </div>
-                            
-                            <br>
-
-                            <div class="input-group col-md-4">
-                                <span class="input-group-addon btn-white"><i class="fa fa-envelope"></i></span>
-                                <input type="text" class="form-control" name="email" placeholder="Email" value= <?php echo '"'.$notify_email.'"';?>>
-
-
-                            
-                            
-                        </div>
-                        <br>
-                        <div class="form-group">
-
-                        <button type="submit" class="btn btn-success" name="submit">Submit</button>
-                    </div>
-                    </form>
-                    </div>
-                </section>
-            </div>
+                </div>
+                </div>' ;
+            }
+            ?>
         </div>
 
                    
@@ -424,32 +379,44 @@ $notify_email = $details[0]['notify_email'];
 </section>
 </section>
 <!-- Placed js at the end of the document so the pages load faster -->
-
 <script src="../js/jquery.js"></script>
-<script src="../js/jquery-1.10.2.min.js"></script>
+<script src="../js/jquery-ui/jquery-ui-1.10.1.custom.min.js"></script>
 <script src="../bs3/js/bootstrap.min.js"></script>
-<script src="../js/jquery-ui-1.9.2.custom.min.js"></script>
-
-
+<script src="../js/jquery.dcjqaccordion.2.7.js"></script>
 <script src="../js/jquery.scrollTo.min.js"></script>
 <script src="../js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
 <script src="../js/jquery.nicescroll.js"></script>
-
-
-<script src="../js/bootstrap-switch.js"></script>
-<script  type="text/javascript" src="../js/typeahead.min.js"></script>
-
-
-
-
-
-<script src="../js/select2/select2.js"></script>
-
-
+<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
+<script src="../js/skycons/skycons.js"></script>
+<script src="../js/jquery.scrollTo/jquery.scrollTo.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+<script src="../js/calendar/clndr.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+<script src="../js/calendar/moment-2.2.1.js"></script>
+<script src="../js/evnt.calendar.init.js"></script>
+<script src="../js/jvector-map/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="../js/jvector-map/jquery-jvectormap-us-lcc-en.js"></script>
+<script src="../js/gauge/gauge.js"></script>
+<!--clock init-->
+<script src="../js/css3clock/js/css3clock.js"></script>
+<!--Easy Pie Chart-->
+<script src="../js/easypiechart/jquery.easypiechart.js"></script>
+<!--Sparkline Chart-->
+<script src="../js/sparkline/jquery.sparkline.js"></script>
+<!--Morris Chart-->
+<script src="../js/morris-chart/morris.js"></script>
+<script src="../js/morris-chart/raphael-min.js"></script>
+<!--jQuery Flot Chart-->
+<script src="../js/flot-chart/jquery.flot.js"></script>
+<script src="../js/flot-chart/jquery.flot.tooltip.min.js"></script>
+<script src="../js/flot-chart/jquery.flot.resize.js"></script>
+<script src="../js/flot-chart/jquery.flot.pie.resize.js"></script>
+<script src="../js/flot-chart/jquery.flot.animator.min.js"></script>
+<script src="../js/flot-chart/jquery.flot.growraf.js"></script>
+<script src="../js/dashboard.js"></script>
+<script src="../js/jquery.customSelect.min.js" ></script>
 <!--common script init for all pages-->
 <script src="../js/scripts.js"></script>
-
-<script src="../js/advanced-form.js"></script>
 <!--script for this page-->
 </body>
 </html>
